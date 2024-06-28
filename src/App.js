@@ -8,23 +8,21 @@ function App() {
 const [responseId,setResponseId]=React.useState("");
 const [resposneState,setResposneState]=useState([])
 
-const loadScript=(src)=>{
-  return new Promise((resolve)=>{
-    const script=document.createElement("script");
-    script.src=src;
+const loadScript = (src) => {
+  return new Promise((resolve) => {
+    const script = document.createElement("script");
+    script.src = src;
 
-    script.onload=()=>{
-            resolve(true)
-    }
-    script.onerror=()=>{
-      resolve(false)
-    }
+    script.onload = () => {
+      resolve(true);
+    };
+    script.onerror = () => {
+      resolve(false);
+    };
 
-    document.body.appendChild(script)
-
-
-  })
-}
+    document.body.appendChild(script);
+  });
+};
 
 const createRazorpayOrder=(amount)=>{
   let data=JSON.stringify({
@@ -54,8 +52,13 @@ const createRazorpayOrder=(amount)=>{
 
 const handleRazorpayScreen=async(amount)=>{
   console.log("started Screen")
-  const res =await loadScript("https:/checkout.razorpay.com/v1/checkout.js")
+  const res =await loadScript("https://checkout.razorpay.com/v1/checkout.js")
   console.log(res)
+
+  if (!res) {
+    alert('Razorpay SDK failed to load. Are you online?');
+    return;
+  }
   
   const options={
     key:"rzp_test_L1JPeGnZbS2ffv",
@@ -89,7 +92,7 @@ const handleRazorpayScreen=async(amount)=>{
   return (
     <div>Welcome to the Payment 
       <button onClick={()=>createRazorpayOrder(100)}>Payment</button>
-      
+
        {responseId && responseId}
 
       <form>
