@@ -67,11 +67,20 @@ const handleRazorpayScreen=async(amount)=>{
     name:"Tech Cart",
     description:"payment to tech cart",
     image:"image",
-    handler:function(response){
-      console.log("hello")
-      console.log(response)
-      setResponseId(response.razorpay_payment_id)
-    },
+    handler:async function  (response){
+      const body={...response};
+      const validateRes=await fetch("https://tech-cart-one.vercel.app/validate",{
+       method:"POST",
+       body:JSON.stringify(body),
+       headers:{
+         "Content-Type":"application/json"
+       },
+      });
+      const jsonRes=await validateRes.json();
+      setResult(jsonRes)
+
+      console.log(jsonRes);
+   },
     prefil:{
       name:"Suhas",
       email:"suhas123.p@mail.com"
