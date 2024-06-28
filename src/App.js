@@ -56,13 +56,7 @@ const handleRazorpayScreen=async(amount)=>{
   console.log("started Screen")
   const res =await loadScript("https:/checkout.razorpay.com/v1/checkout.js")
   console.log(res)
-  if(!res){
-    alert("some error at razorpay")
-    return
-  }
-  else{
-    console.log("Scrren not able to display")
-  }
+  
   const options={
     key:"rzp_test_L1JPeGnZbS2ffv",
     amount:amount,
@@ -71,6 +65,8 @@ const handleRazorpayScreen=async(amount)=>{
     description:"payment to tech cart",
     image:"image",
     handler:function(response){
+      console.log("hello")
+      console.log(response)
       setResponseId(response.razorpay_payment_id)
     },
     prefil:{
@@ -93,7 +89,8 @@ const handleRazorpayScreen=async(amount)=>{
   return (
     <div>Welcome to the Payment 
       <button onClick={()=>createRazorpayOrder(100)}>Payment</button>
-
+      
+       {responseId && responseId}
 
       <form>
       
